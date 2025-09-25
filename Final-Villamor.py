@@ -2,22 +2,22 @@ import tkinter as tk
 from tkinter import ttk, messagebox
 import mysql.connector
 
-# -------------------- MySQL Connection --------------------
+# MySQL Connection
 conn = mysql.connector.connect(
     host="localhost",
     user="root",
     password="",   
-    port=3307  # change if XAMPP uses a different port
+    port=3307  # change if XAMPP uses a different port | Change this to 3306 if your current port is running on 3306
 )
 
 cursor = conn.cursor()
-print("✅ Connected to MySQL/MariaDB!")
+print(" Connected to MySQL/MariaDB!")
 
-# -------------------- Create Database if Not Exists --------------------
+
 cursor.execute("CREATE DATABASE IF NOT EXISTS shs_registration")
-cursor.execute("USE shs_registration")  # Switch to the new database
+cursor.execute("USE shs_registration")  # Switch to the new database, if it doesnt exist yet
 
-# -------------------- Create Table --------------------
+
 cursor.execute("""
 CREATE TABLE IF NOT EXISTS students (
     id INT AUTO_INCREMENT PRIMARY KEY,
@@ -33,7 +33,6 @@ CREATE TABLE IF NOT EXISTS students (
 conn.commit()
 
 
-# -------------------- Helper Functions --------------------
 def center_window(win, w, h):
     screen_w = win.winfo_screenwidth()
     screen_h = win.winfo_screenheight()
@@ -41,7 +40,7 @@ def center_window(win, w, h):
     y = int((screen_h / 2) - (h / 2))
     win.geometry(f"{w}x{h}+{x}+{y}")
 
-# -------------------- Tkinter Windows --------------------
+
 def open_student_registration():
     reg_win = tk.Toplevel(root)
     reg_win.title("Student Registration Form")
@@ -129,7 +128,7 @@ def open_confirmation(student_data):
 
     tk.Button(confirm_win, text="Register", command=register).pack(pady=20)
 
-# -------------------- Main Window --------------------
+
 root = tk.Tk()
 root.title("SHS Students Registration System")
 center_window(root, 400, 250)
